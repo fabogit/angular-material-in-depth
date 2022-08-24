@@ -5,7 +5,12 @@
 
     <h2 class="title">All Courses</h2>
 
-    <button mat-mini-fab routerLink="/add-new-course">
+    <button mat-mini-fab routerLink="/add-new-course"
+			matTooltip="Create a course" matTooltipPosition="right"
+			[matTooltipShowDelay]="500"
+			[matTooltipHideDelay]="1000"
+			[matTooltipDisabled]="false"
+		>
       <mat-icon class="add-course-btn">add</mat-icon>
     </button>
 
@@ -20,7 +25,7 @@
 
 		<mat-tab label="Advanced">
 			<courses-card-list [courses]="advancedCourses$ | async">
-courses-card-list
+				courses-card-list
 			</courses-card-list>
 		</mat-tab>
 
