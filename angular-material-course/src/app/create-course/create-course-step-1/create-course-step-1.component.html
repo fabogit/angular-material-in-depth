@@ -1,5 +1,6 @@
 <div [formGroup]="form" class="course-details-form">
 
+	<!-- material input -->
 	<mat-form-field appearance="" floatLabel="auto">
 		<input matInput placeholder="Course title" maxlength="60" formControlName="title" #titleElem />
 
@@ -11,6 +12,7 @@
 
 	</mat-form-field>
 
+	<!-- material radio -->
 	<mat-radio-group class="course-type" formControlName="courseType">
 
 		<mat-radio-button [disabled]="true" value="free">Free</mat-radio-button>
@@ -18,6 +20,7 @@
 
 	</mat-radio-group>
 
+	<!-- material select -->
 	<mat-form-field appearance="">
 		<!-- add multiple attribute to enable multi select -->
 		<mat-select formControlName="category" placeholder="Select category">
@@ -42,16 +45,19 @@
 
 	</mat-form-field>
 
+	<!-- material datepicker -->
 	<mat-form-field appearance="outline">
 		<input matInput  formControlName="releasedAt" placeholder="Release date" [matDatepicker]="releasedAtPicker"/>
 		<mat-datepicker-toggle matSuffix [for]="releasedAtPicker"></mat-datepicker-toggle>
 		<mat-datepicker #releasedAtPicker [dateClass]="dateClass"></mat-datepicker>
 	</mat-form-field>
 
+	<!-- material checkbox -->
 	<mat-checkbox color="primary" formControlName="downloadsAllowed" [disabled]="false" indeterminate="true">
 		Download allowed?
 	</mat-checkbox>
 
+	<!-- material textarea -->
 	<mat-form-field appearance="outline">
 		<textarea matInput formControlName="longDescription" placeholder="Description" cdkTextareaAutosize [cdkAutosizeMinRows]="2" [cdkAutosizeMaxRows]="5"></textarea>
 	</mat-form-field>
