@@ -5,7 +5,7 @@ import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { Course } from "../model/course";
 import { CoursesService } from "../services/courses.service";
-import { debounceTime, distinctUntilChanged, startWith, tap, delay, catchError } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, startWith, tap, delay, catchError, finalize } from 'rxjs/operators';
 import { merge, fromEvent, throwError } from "rxjs";
 import { Lesson } from '../model/lesson';
 
@@ -20,6 +20,7 @@ export class CourseComponent implements OnInit, AfterViewInit {
 	course: Course;
 	lessons: Lesson[] = [];
 	displayedColumns = ['seqNo', 'description', 'duration'];
+	isLoading = false;
 
 	constructor(private route: ActivatedRoute, private coursesService: CoursesService) {
 	}
@@ -33,6 +34,7 @@ export class CourseComponent implements OnInit, AfterViewInit {
 	}
 
 	loadLessonPage() {
+		this.isLoading = true;
 		this.coursesService.findLessons(this.course.id, 'asc', 0, 3)
 			.pipe(
 				// assing response data to array
@@ -43,7 +45,9 @@ export class CourseComponent implements OnInit, AfterViewInit {
 					alert('Error loading lessons');
 					// return an empty observable or forward the error
 					return throwError(err);
-				})
+				}),
+				// turn off loading spinner in any case
+				finalize(() => this.isLoading = false)
 			)
 			.subscribe();
 	}
