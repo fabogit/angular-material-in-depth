@@ -21,21 +21,18 @@ export class CourseComponent implements OnInit, AfterViewInit {
 	lessons: Lesson[] = [];
 	displayedColumns = ['seqNo', 'description', 'duration'];
 	isLoading = false;
-
-	constructor(private route: ActivatedRoute, private coursesService: CoursesService) {
-	}
-
-	ngOnInit() {
-		this.course = this.route.snapshot.data["course"];
-		this.loadLessonPage();
-	}
-
-	ngAfterViewInit() {
-	}
+	// grab first reference of type MatPaginator
+	@ViewChild(MatPaginator)
+	paginator: MatPaginator;
 
 	loadLessonPage() {
 		this.isLoading = true;
-		this.coursesService.findLessons(this.course.id, 'asc', 0, 3)
+		this.coursesService.findLessons(
+			this.course.id,
+			'asc',
+			this.paginator?.pageIndex ?? 0,
+			this.paginator?.pageSize ?? 5
+		)
 			.pipe(
 				// assing response data to array
 				tap(lessons => this.lessons = lessons),
@@ -51,5 +48,23 @@ export class CourseComponent implements OnInit, AfterViewInit {
 			)
 			.subscribe();
 	}
+
+	constructor(private route: ActivatedRoute, private coursesService: CoursesService) {
+	}
+
+	ngOnInit() {
+		this.course = this.route.snapshot.data["course"];
+		this.loadLessonPage();
+	}
+
+	ngAfterViewInit() {
+		// afterViewInit hook beacause @ViewChild might not yet exist onInit
+		this.paginator.page.pipe(
+			tap(() => this.loadLessonPage())
+		)
+			.subscribe();
+	}
+
+
 
 }
