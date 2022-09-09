@@ -25,14 +25,17 @@ export class CourseComponent implements OnInit, AfterViewInit {
 	@ViewChild(MatPaginator)
 	paginator: MatPaginator;
 
+	@ViewChild(MatSort)
+	sort: MatSort;
+
 	loadLessonPage() {
 		this.isLoading = true;
 		this.coursesService.findLessons(
 			this.course.id,
-			'asc',
+			this.sort?.direction ?? 'asc',
 			this.paginator?.pageIndex ?? 0,
-			this.paginator?.pageSize ?? 5
-		)
+			this.paginator?.pageSize ?? 5,
+			this.sort?.active ?? 'seqNo')
 			.pipe(
 				// assing response data to array
 				tap(lessons => this.lessons = lessons),
@@ -58,10 +61,14 @@ export class CourseComponent implements OnInit, AfterViewInit {
 	}
 
 	ngAfterViewInit() {
-		// afterViewInit hook beacause @ViewChild might not yet exist onInit
-		this.paginator.page.pipe(
-			tap(() => this.loadLessonPage())
-		)
+		// reset page when order change
+		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+		// afterViewInit hook beacause @ViewChild might not yet exist onInit, merge observables
+		merge(this.sort.sortChange, this.paginator.page)
+			.pipe(
+				tap(() => this.loadLessonPage())
+			)
 			.subscribe();
 	}
 
