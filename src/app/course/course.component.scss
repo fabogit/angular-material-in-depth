@@ -1,70 +1,75 @@
-
 .course {
-  text-align: center;
-  width: 390px;
-  margin: 0 auto;
+	text-align: center;
+	width: 390px;
+	margin: 0 auto;
 }
 
 .course-thumbnail {
-  width: 150px;
-  margin: 20px auto 0 auto;
-  display: block;
+	width: 150px;
+	margin: 20px auto 0 auto;
+	display: block;
 }
 
 .description-cell {
-  text-align: left;
-  margin: 10px auto;
+	text-align: left;
+	margin: 10px auto;
 }
 
 .duration-cell {
-  text-align: center;
+	text-align: center;
 }
 
 .duration-cell mat-icon {
-  display: inline-block;
-  vertical-align: middle;
-  font-size: 20px;
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 20px;
 }
 
 .spinner-container {
-  height: 360px;
-  width: 390px;
-  position: fixed;
+	height: 360px;
+	width: 390px;
+	position: fixed;
 }
 
 .lessons-table {
-  min-height: 360px;
-  margin-top: 10px;
-  width: 400px;
-  margin-left: auto;
-  margin-right: auto;
-  tr:hover {
-    background: whitesmoke;
-    cursor: pointer;
-  }
+	min-height: 360px;
+	margin-top: 10px;
+	width: 400px;
+	margin-left: auto;
+	margin-right: auto;
+
+	tr:hover {
+		background: whitesmoke;
+		cursor: pointer;
+	}
+}
+
+// hide additional table row
+.collapsed-detail {
+	display: none;
 }
 
 mat-paginator {
-  width: 400px;
-  margin-bottom: 200px;
+	width: 400px;
+	margin-bottom: 200px;
 }
 
 .spinner-container mat-spinner {
-  margin: 130px auto 0 auto;
+	margin: 130px auto 0 auto;
 }
 
 .mat-column-seqNo {
-  width: 32px;
-  border-right: 1px solid black;
-  padding-right: 24px;
-  text-align: center;
+	width: 32px;
+	border-right: 1px solid black;
+	padding-right: 24px;
+	text-align: center;
 }
 
 .mat-column-description {
-  padding-left:20px;
-  text-align: left;
+	padding-left: 20px;
+	text-align: left;
 }
 
 .mat-column-duration {
-  font-style: italic;
+	font-style: italic;
 }

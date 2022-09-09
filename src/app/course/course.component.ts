@@ -21,6 +21,8 @@ export class CourseComponent implements OnInit, AfterViewInit {
 	lessons: Lesson[] = [];
 	displayedColumns = ['seqNo', 'description', 'duration'];
 	isLoading = false;
+	expandedLesson: Lesson = null;
+
 	// grab first reference of type MatPaginator
 	@ViewChild(MatPaginator)
 	paginator: MatPaginator;
@@ -50,6 +52,15 @@ export class CourseComponent implements OnInit, AfterViewInit {
 				finalize(() => this.isLoading = false)
 			)
 			.subscribe();
+	}
+
+	onToggleLesson(lesson: Lesson) {
+		if (lesson == this.expandedLesson) {
+			this.expandedLesson = null;
+		}
+		else {
+			this.expandedLesson = lesson;
+		}
 	}
 
 	constructor(private route: ActivatedRoute, private coursesService: CoursesService) {
