@@ -8,6 +8,7 @@ import { CoursesService } from "../services/courses.service";
 import { debounceTime, distinctUntilChanged, startWith, tap, delay, catchError, finalize } from 'rxjs/operators';
 import { merge, fromEvent, throwError } from "rxjs";
 import { Lesson } from '../model/lesson';
+import { SelectionModel } from '@angular/cdk/collections';
 
 
 @Component({
@@ -19,9 +20,10 @@ export class CourseComponent implements OnInit, AfterViewInit {
 
 	course: Course;
 	lessons: Lesson[] = [];
-	displayedColumns = ['seqNo', 'description', 'duration'];
+	displayedColumns = ['select', 'seqNo', 'description', 'duration'];
 	isLoading = false;
 	expandedLesson: Lesson = null;
+	selection = new SelectionModel<Lesson>(true, []);
 
 	// grab first reference of type MatPaginator
 	@ViewChild(MatPaginator)
@@ -54,12 +56,33 @@ export class CourseComponent implements OnInit, AfterViewInit {
 			.subscribe();
 	}
 
+
+	// selection column checkbox
+	onLessonToggled(lesson: Lesson) {
+		this.selection.toggle(lesson);
+		console.log(this.selection.selected);
+	}
+
+	// row selection, expand extra rows
 	onToggleLesson(lesson: Lesson) {
 		if (lesson == this.expandedLesson) {
 			this.expandedLesson = null;
 		}
 		else {
 			this.expandedLesson = lesson;
+		}
+	}
+
+	isAllSelected() {
+		return this.selection.selected?.length == this.lessons?.length;
+	}
+
+	toggleAll() {
+		if (this.isAllSelected()) {
+			this.selection.clear();
+		}
+		else {
+			this.selection.select(...this.lessons);
 		}
 	}
 
