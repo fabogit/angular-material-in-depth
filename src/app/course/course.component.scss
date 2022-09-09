@@ -49,6 +49,13 @@
 	display: none;
 }
 
+// scrolling for sticky, remove comment to use
+// .scrolling-container {
+// 	max-height: 250px;
+// 	max-width: 300px;
+// 	overflow: auto;
+// }
+
 mat-paginator {
 	width: 400px;
 	margin-bottom: 200px;
